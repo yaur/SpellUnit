@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<SpellUnitTestSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- this is an example tes settings file... modify to suit your needs-->
+  <IgnoredWords>
+    <string>IP</string>
+  </IgnoredWords>
+  <IgnoredProperties>
+    <string>MyFunkyProperty</string>
+  </IgnoredProperties>
+  <CompositionAssemblies>
+    <string>SpellUnit.Core.dll</string>
+    <string>SpellUnit.ServiceStackExtractor.dll</string>
+    <string>SpellUnit.NHunspell.dll</string>
+  </CompositionAssemblies>
+  <AssemblyUnderTest>foo.dll</AssemblyUnderTest>
+  <TypeUnderTest>foo.bar</TypeUnderTest>
+</SpellUnitTestSettings>
