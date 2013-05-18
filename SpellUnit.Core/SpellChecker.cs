@@ -37,6 +37,17 @@ namespace SpellUnit
         [Import(typeof(IIgnoredProperty))]
         IIgnoredProperty propertyIgnorer;
 
+        [ImportMany(typeof(IIgnoredWords))]
+        IEnumerable<IIgnoredWords> wordIgnorers;
+
+        private bool IsIgnoredWord(string word)
+        {
+            foreach(var ignorer in wordIgnorers)
+            {
+                if(ignorer.IsIgnored(word)) return true;
+            }
+            return false;
+        }
         public void Compose()
         {
             Compose(AppDomain.CurrentDomain.GetAssemblies());
@@ -78,7 +89,7 @@ namespace SpellUnit
             {
                 var lclResults = rules
                             .Where(rule => rule.RunOnType(x.FragementType))
-                            .Where(rule => !rule.Validate(x.Value))
+                            .Where(rule => rule.Validate(x.Value).Where( y=>IsIgnoredWord(y)==false).Any() )
                             .Select(rule => new FailureResult { Value = x, Rule = rule }).ToList(); ;
                 if (lclResults.Any())
                 {
@@ -119,7 +130,7 @@ namespace SpellUnit
             {
                 var lclResults = rules
                         .Where(rule => rule.RunOnType(x.FragementType))
-                        .Where(rule => !rule.Validate(x.Value))
+                        .Where(rule => rule.Validate(x.Value).Where(y => IsIgnoredWord(y) == false).Any())
                         .Select(rule => new FailureResult { Value = x, Rule = rule }).ToList(); ;
                 if (lclResults.Any())
                 {

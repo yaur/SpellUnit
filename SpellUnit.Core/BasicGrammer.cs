@@ -15,6 +15,7 @@
  *  along with SpellUnit.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using SpellUnit.Interfaces;
@@ -36,10 +37,14 @@ namespace SpellUnit
             return (type == FragmentType.Sentence) || (type == FragmentType.Paragraph);
         }
 
-        public bool Validate(string value)
+        public IEnumerable<string> Validate(string value)
         {
             // this is documentation... if you end with a quetion mark or other punctuation you are doing it wrong
-            return char.IsUpper(value.First()) && (value.Last() == '.' || value.Last() == '!');
+            if (char.IsUpper(value.First()) && (value.Last() == '.' || value.Last() == '!'))
+            {
+                return new string[0];
+            }
+            return new string[1]{value};
         }
 
         #endregion

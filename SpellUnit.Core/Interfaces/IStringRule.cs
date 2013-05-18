@@ -10,6 +10,6 @@ namespace SpellUnit.Interfaces
     {
         string Name { get; }
         bool RunOnType(FragmentType type);
-        bool Validate(string value);
+        IEnumerable<string> Validate(string value);
     }
 }

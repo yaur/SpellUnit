@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using NHunspell;
@@ -53,16 +54,17 @@ namespace NHunspellChecker
             return true;
         }
 
-        public bool Validate(string value)
+        public IEnumerable<String> Validate(string value)
         {
-            var wordSplitTokens = " \n  .!,\"'".ToArray();
+            var wordSplitTokens = " \n  .!,\"'/[]()".ToArray();
             var words = value.Split(wordSplitTokens, StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in words)
             {
-                if (IgnoredWords.IsIgnored(word)) continue;
-                if(!(checker.Spell(word)))return false;
+                if (!(checker.Spell(word)))
+                {
+                    yield return word;
+                }
             }
-            return true;
         }
 
         #endregion

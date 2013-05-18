@@ -25,13 +25,24 @@ namespace SpellUnit
         static int failCount = 0;
         static void Main(string[] args)
         {
+            var settings = SpellUnit.SpellUnitTestSettings.FromFile("DefaultSpellUnit.testsettings.xml");
+
             Assembly[] toTest = args.Select(x => Assembly.LoadFrom(x)).ToArray();
 
-            Assembly.LoadFrom("SpellUnit.ServiceStackExtractor.dll");
-            Assembly.LoadFrom("SpellUnit.NHunspell.dll");
+            Assembly[] compositionSources = settings.CompositionAssemblies.Select(x => Assembly.LoadFrom(x)).ToArray();
+
             var checker = new SpellChecker();
-            checker.Compose();
-            DefaultWordDictionary.AddIgnoredWords(new String[] { "IP", "NOC" });
+            if (compositionSources.Length == 0)
+            {
+                checker.Compose();
+            }
+            else
+            {
+                checker.Compose(compositionSources);
+            }
+            SpellUnit.DefaultWordDictionary.AddIgnoredWords(settings.IgnoredWords);
+            SpellUnit.DefaultPropertyDictionary.AddIgnoredWords(settings.IgnoredProperties);
+
             checker.Validate(ValidationFailed, toTest);
             Console.WriteLine("{0} failures", failCount);
         }
