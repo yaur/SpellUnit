@@ -37,6 +37,8 @@ namespace NHunspellChecker
 
         Hunspell checker = null;
 
+        private object lockObject = new object();
+
         public NHunspell()
         {
             checker = new Hunspell(locale + ".aff", locale + ".dic");
@@ -58,11 +60,14 @@ namespace NHunspellChecker
         {
             var wordSplitTokens = " \n  .!,\"'/[]()".ToArray();
             var words = value.Split(wordSplitTokens, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
+            lock (lockObject)
             {
-                if (!(checker.Spell(word)))
+                foreach (var word in words)
                 {
-                    yield return word;
+                    if (!(checker.Spell(word)))
+                    {
+                        yield return word;
+                    }
                 }
             }
         }
