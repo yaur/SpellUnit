@@ -35,6 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Api.Swagger">
       <HintPath>..\lib\ServiceStack\ServiceStack.Api.Swagger.dll</HintPath>
     </Reference>
@@ -87,6 +100,10 @@
       <Project>{44681a2e-52f4-4e87-be4f-618ae663922a}</Project>
       <Name>SpellUnit.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SpellUnit.ExceptionLiteralsExtractor\SpellUnit.ExceptionLiteralsExtractor.csproj">
+      <Project>{f61b1ce5-e9b9-4b5a-a0a9-ab801708df9b}</Project>
+      <Name>SpellUnit.ExceptionLiteralsExtractor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpellUnit.ServiceStackExtractor\SpellUnit.ServiceStackExtractor.csproj">
       <Project>{286467f5-c8a1-4675-a114-63f41c8b5cb0}</Project>
       <Name>SpellUnit.ServiceStackExtractor</Name>
@@ -101,6 +118,7 @@
       <Link>en_US.dic</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
